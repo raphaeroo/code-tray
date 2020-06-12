@@ -1,10 +1,14 @@
 const { resolve } = require('path')
 const { app, Tray, Menu } = require('electron')
 
-app.dock.hide()
+process.platform === 'darwin' && app.dock.hide()
 
 app.on('ready', () => {
-  const tray = new Tray(resolve(__dirname, 'assets', 'iconTemplate.png'))
+  const tray = process.platform === 'darwin'
+    ? new Tray(resolve(__dirname, 'assets', 'iconTemplate.png'))
+    : process.platform === 'linux'
+      ? new Tray(resolve(__dirname, 'assets', 'vscode-white.png'))
+      : new Tray(resolve(__dirname, 'assets', 'vscode-white.ico'))
 
   const contextMenu = Menu.buildFromTemplate([
     {
