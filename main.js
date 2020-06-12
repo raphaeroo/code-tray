@@ -2,6 +2,7 @@ const { resolve, basename } = require('path')
 const { app, Tray, Menu, dialog } = require('electron')
 
 const Store = require('electron-store')
+const { spawn } = require('child_process')
 
 const schema = {
   projects: {
@@ -19,9 +20,12 @@ app.on('ready', () => {
     ? JSON.parse(store.get('projects'))
     : []
 
-  // store.clear()
-
-  console.log(projects)
+  const items = projects.map((project) => {
+    return {
+      label: project.name,
+      click: () => spawn('code', [project.path], { shell: true })
+    }
+  })
 
   const tray = process.platform === 'darwin'
     ? new Tray(resolve(__dirname, 'assets', 'iconTemplate.png'))
@@ -30,8 +34,9 @@ app.on('ready', () => {
       : new Tray(resolve(__dirname, 'assets', 'vscode-white.ico'))
 
   const contextMenu = Menu.buildFromTemplate([
+    ...items,
     {
-      label: 'Item1',
+      label: 'Adicionar novo projeto...',
       type: 'radio',
       checked: true,
       click: () => {
