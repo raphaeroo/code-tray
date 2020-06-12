@@ -1,5 +1,5 @@
 const { resolve } = require('path')
-const { app, Tray, Menu } = require('electron')
+const { app, Tray, Menu, dialog } = require('electron')
 
 process.platform === 'darwin' && app.dock.hide()
 
@@ -15,9 +15,12 @@ app.on('ready', () => {
       label: 'Item1',
       type: 'radio',
       checked: true,
+      click: () => {
+        dialog.showOpenDialog({ properties: ['openDirectory'] })
+          .then((path) => console.log(path.filePaths))
+      },
     }
   ])
   
   tray.setContextMenu(contextMenu)
 })
-
