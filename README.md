@@ -18,9 +18,7 @@ Code Tray - Electron
 
 ## Participants
 
-| [<img src="https://avatars0.githubusercontent.com/u/2254731?s=460&v=4" width="75px;"/>](https://github.com/raphaeroo) |
-| :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
-|                                       [Raphael F.](https://github.com/raphaeroo)                                        
+[<img src="https://avatars1.githubusercontent.com/u/41158134?s=460&u=dd83e42299c9b81f890c5ab2b79b219346fb1542&v=4" width="75px;"/>](https://github.com/raphaeroo) [Raphael F.](https://github.com/raphaeroo)                                        
 
 ## Features
 
