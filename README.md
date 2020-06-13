@@ -1,12 +1,10 @@
 <h1 align="center">
 <br>
-  <img src="build/icon.png" alt="GoBarber" width="90">
+  <img src="build/icon.png" alt="Flight High" width="90">
 <br>
 <br>
-Code Tray - Electron
+Visual Studio Code Tray - Electron
 </h1>
-
-<p align="center">In this code challenge we developed an app that provides an easy way to open favorite projects on VSCode.</p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
@@ -14,11 +12,7 @@ Code Tray - Electron
   </a>
 </p>
 
-<hr>
-
-## Participants
-
-[<img src="https://avatars1.githubusercontent.com/u/41158134?s=460&u=dd83e42299c9b81f890c5ab2b79b219346fb1542&v=4" width="75px;"/>](https://github.com/raphaeroo) [Raphael F.](https://github.com/raphaeroo)                                        
+<hr>                                      
 
 ## Features
 
@@ -30,13 +24,6 @@ Code Tray - Electron
 
 - [Node.js](https://nodejs.org/en/) >= 8.0.0
 - [Yarn](https://yarnpkg.com/pt-BR/docs/install)
-
-## Getting started
-
-1. Clone this repository;
-2. `cd youtube-challenge-electron-tray`;<br />
-3. Run `yarn` to install dependencies.<br />
-4. Run `yarn start`.
 
 ## Contributing
 
