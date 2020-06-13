@@ -3,15 +3,12 @@
   <img src="build/icon.png" alt="GoBarber" width="90">
 <br>
 <br>
-Code Challenge - Electron
+Code Tray - Electron
 </h1>
 
 <p align="center">In this code challenge we developed an app that provides an easy way to open favorite projects on VSCode.</p>
 
 <p align="center">
-  <a href="https://github.com/Rocketseat/youtube-challenge-electron-tray/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/rocketseat/youtube-challenge-electron-tray?color=%237159c1&logoColor=%237159c1&style=flat" alt="Contributors">
-  </a>
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/github/license/rocketseat/youtube-challenge-electron-tray?color=%237159c1&logo=mit" alt="License">
   </a>
@@ -21,9 +18,9 @@ Code Challenge - Electron
 
 ## Participants
 
-| [<img src="https://avatars0.githubusercontent.com/u/2254731?s=460&v=4" width="75px;"/>](https://github.com/diego3g) | [<img src="https://avatars3.githubusercontent.com/u/7268910?s=460&v=4" width="75px;"/>](https://github.com/jpdemagalhaes) |
+| [<img src="https://avatars0.githubusercontent.com/u/2254731?s=460&v=4" width="75px;"/>](https://github.com/raphaeroo) |
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
-|                                       [Diego F.](https://github.com/diego3g)                                        |                                      [João Paulo](https://github.com/jpdemagalhaes)                                       |
+|                                       [Raphael F.](https://github.com/raphaeroo)                                        
 
 ## Features
 
