@@ -1,21 +1,50 @@
 {
   "name": "code-tray",
+  "description": "Open VSCode projects from tray menu.",
   "version": "1.0.0",
   "main": "main.js",
+  "repository": "https://github.com/diego3g/youtube-challenge-electron-tray",
+  "author": "Rocketseat <oi@rocketseat.com.br>",
   "license": "MIT",
   "scripts": {
-    "start": "electron ."
-  },
-  "devDependencies": {
-    "electron": "^9.0.3",
-    "eslint": "^7.2.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "start": "electron .",
+    "dev": "nodemon --exec electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:all": "npm-run-all -p dist:*",
+    "dist:mac": "electron-builder --mac",
+    "dist:windows": "electron-builder --windows",
+    "dist:linux": "electron-builder --linux",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
-    "electron-store": "^5.2.0"
+    "@sentry/electron": "0.17.1",
+    "electron-store": "^4.0.0",
+    "fix-path": "^2.1.0",
+    "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "electron": "^5.0.7",
+    "electron-builder": "^21.0.15",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "nodemon": "^1.19.1"
+  },
+  "build": {
+    "appId": "com.rocketseat.codetray",
+    "productName": "Code Tray",
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "category": "Utility",
+      "icon": "icon.png",
+      "target": [
+        "deb",
+        "snap",
+        "rpm"
+      ]
+    }
   }
 }

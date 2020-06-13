@@ -1,56 +1,121 @@
-const { resolve, basename } = require('path')
-const { app, Tray, Menu, dialog } = require('electron')
+const { resolve, basename } = require('path');
+const {
+  app, Menu, Tray, dialog,
+} = require('electron');
 
-const Store = require('electron-store')
-const { spawn } = require('child_process')
+const { spawn } = require('child_process');
+const fixPath = require('fix-path');
+const fs = require('fs');
+
+const Store = require('electron-store');
+const Sentry = require('@sentry/electron');
+
+fixPath();
+
+Sentry.init({ dsn: 'https://18c9943a576d41248b195b5678f2724e@sentry.io/1506479' });
 
 const schema = {
   projects: {
-    type: 'string'
+    type: 'string',
+  },
+};
+
+let mainTray = {};
+
+if (app.dock) {
+  app.dock.hide();
+}
+
+const store = new Store({ schema });
+
+function getLocale() {
+  const locale = app.getLocale();
+
+  switch (locale) {
+    case 'es-419' || 'es':
+      return JSON.parse(fs.readFileSync(resolve(__dirname, 'locale/es.json')));
+    case 'pt-BR' || 'pt-PT':
+      return JSON.parse(fs.readFileSync(resolve(__dirname, 'locale/pt.json')));
+    default:
+      return JSON.parse(fs.readFileSync(resolve(__dirname, 'locale/en.json')));
   }
 }
 
-const store = new Store({ schema })
+function render(tray = mainTray) {
+  const storedProjects = store.get('projects');
+  const projects = storedProjects ? JSON.parse(storedProjects) : [];
+  const locale = getLocale();
 
-process.platform === 'darwin' && app.dock.hide()
-
-app.on('ready', () => {
-  const storedProjects = store.get('projects')
-  const projects = storedProjects
-    ? JSON.parse(store.get('projects'))
-    : []
-
-  const items = projects.map((project) => {
-    return {
-      label: project.name,
-      click: () => spawn('code', [project.path], { shell: true })
-    }
-  })
-
-  const tray = process.platform === 'darwin'
-    ? new Tray(resolve(__dirname, 'assets', 'iconTemplate.png'))
-    : process.platform === 'linux'
-      ? new Tray(resolve(__dirname, 'assets', 'vscode-white.png'))
-      : new Tray(resolve(__dirname, 'assets', 'vscode-white.ico'))
+  const items = projects.map(({ name, path }) => ({
+    label: name,
+    submenu: [
+      {
+        label: locale.open,
+        click: () => {
+          spawn('code', [path], { shell: true });
+        },
+      },
+      {
+        label: locale.remove,
+        click: () => {
+          store.set('projects', JSON.stringify(projects.filter(item => item.path !== path)));
+          render();
+        },
+      },
+    ],
+  }));
 
   const contextMenu = Menu.buildFromTemplate([
+    {
+      label: locale.add,
+      click: () => {
+        const result = dialog.showOpenDialog({ properties: ['openDirectory'] });
+
+        if (!result) return;
+
+        const [path] = result;
+        const name = basename(path);
+
+        store.set(
+          'projects',
+          JSON.stringify([
+            ...projects,
+            {
+              path,
+              name,
+            },
+          ]),
+        );
+
+        render();
+      },
+    },
+    {
+      type: 'separator',
+    },
     ...items,
     {
-      label: 'Adicionar novo projeto...',
-      type: 'radio',
-      checked: true,
-      click: () => {
-        dialog.showOpenDialog({ properties: ['openDirectory'] })
-          .then((path) => {
-            const projectPath = path.filePaths[0]
-            store.set('projects', JSON.stringify([...projects, {
-              path: projectPath,
-              name: basename(projectPath)
-            }]))
-          }).catch((err) => console.log(err)).finally(() => console.log('Projeto Adicionado'))
-      }
-    }
-  ])
+      type: 'separator',
+    },
+    {
+      type: 'normal',
+      label: locale.close,
+      role: 'quit',
+      enabled: true,
+    },
+  ]);
 
-  tray.setContextMenu(contextMenu)
-})
+  tray.setContextMenu(contextMenu);
+
+  tray.on('click', tray.popUpContextMenu);
+}
+
+app.on('ready', () => {
+  mainTray = process.platform === 'darwin'
+  ? new Tray(resolve(__dirname, 'assets', 'iconTemplate.png'))
+  : process.platform === 'linux'
+    ? new Tray(resolve(__dirname, 'assets', 'vscode-white.png'))
+    : new Tray(resolve(__dirname, 'assets', 'vscode-white.ico'))
+
+  render(mainTray);
+});
