@@ -3,8 +3,8 @@
   "description": "Open VSCode projects from tray menu.",
   "version": "2.1.0",
   "main": "main.js",
-  "repository": "https://github.com/raphaeroo/code-tray",
-  "author": "Hawks <dev@hawks.com.br>",
+  "repository": "https://github.com/diego3g/youtube-challenge-electron-tray",
+  "author": "Hawks <oi@hawks.com.br>",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
@@ -18,22 +18,22 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
-    "@sentry/electron": "0.17.1",
-    "electron-store": "^4.0.0",
-    "fix-path": "^2.1.0",
+    "@sentry/electron": "^2.4.0",
+    "electron-store": "^7.0.2",
+    "fix-path": "^3.0.0",
     "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
-    "electron": "^5.0.7",
-    "electron-builder": "^21.0.15",
+    "electron": "^12.0.2",
+    "electron-builder": "^22.10.5",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.0",
-    "nodemon": "^1.19.1"
+    "nodemon": "^2.0.7"
   },
   "build": {
     "appId": "com.hawks.codetray",
-    "productName": "Visual Studio Code Tray",
+    "productName": "Code Tray",
     "mac": {
       "category": "public.app-category.developer-tools"
     },
@@ -42,7 +42,8 @@
       "icon": "icon.png",
       "target": [
         "deb",
-        "snap"
+        "snap",
+        "rpm"
       ]
     }
   }

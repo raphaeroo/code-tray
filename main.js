@@ -12,7 +12,7 @@ const Sentry = require('@sentry/electron');
 
 fixPath();
 
-Sentry.init({ dsn: 'https://18c9943a576d41248b195b5678f2724e@sentry.io/1506479' });
+Sentry.init({ dsn: 'https://19b49f03c3614155916af54680f728b5@o559602.ingest.sentry.io/5694558' });
 
 const schema = {
   projects: {
@@ -69,25 +69,28 @@ function render(tray = mainTray) {
     {
       label: locale.add,
       click: () => {
-        const result = dialog.showOpenDialog({ properties: ['openDirectory'] });
+        dialog.showOpenDialog({
+          properties: ['openDirectory']
+        }).then(res => {
+          const path = res.filePaths[0];
+          const name = basename(path);
 
-        if (!result) return;
+          store.set(
+            'projects',
+            JSON.stringify([
+              ...projects,
+              {
+                path,
+                name,
+              },
+            ]),
+          );
 
-        const [path] = result;
-        const name = basename(path);
-
-        store.set(
-          'projects',
-          JSON.stringify([
-            ...projects,
-            {
-              path,
-              name,
-            },
-          ]),
-        );
-
-        render();
+          render();
+          
+        }).catch(err => {
+          return
+        })
       },
     },
     {
@@ -111,11 +114,7 @@ function render(tray = mainTray) {
 }
 
 app.on('ready', () => {
-  mainTray = process.platform === 'darwin'
-  ? new Tray(resolve(__dirname, 'assets', 'iconTemplate.png'))
-  : process.platform === 'linux'
-    ? new Tray(resolve(__dirname, 'assets', 'vscode-white.png'))
-    : new Tray(resolve(__dirname, 'assets', 'vscode-white.ico'))
+  mainTray = new Tray(resolve(__dirname, 'assets', 'iconTemplate.png'));
 
   render(mainTray);
 });
