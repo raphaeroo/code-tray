@@ -8,7 +8,7 @@
     "standard"
   ],
   "parserOptions": {
-    "ecmaVersion": 11
+    "ecmaVersion": "latest"
   },
   "rules": {
     "space-before-function-paren": "off"
